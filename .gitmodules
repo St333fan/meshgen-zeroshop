@@ -4,3 +4,12 @@
 [submodule "registration/mast3r-zeroshop"]
 	path = registration/mast3r-zeroshop
 	url = https://github.com/St333fan/mast3r-zeroshop
+[submodule "registration/vggt-zeroshop"]
+	path = registration/vggt-zeroshop
+	url = https://github.com/St333fan/vggt-zeroshop
+[submodule "nvs/2d-gaussian-splatting-zeroshop"]
+	path = nvs/2d-gaussian-splatting-zeroshop
+	url = https://github.com/St333fan/2d-gaussian-splatting-zeroshop
+[submodule "nvs/svraster-zeroshop"]
+	path = nvs/svraster-zeroshop
+	url = https://github.com/St333fan/svraster-zeroshop
