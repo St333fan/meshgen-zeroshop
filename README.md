@@ -1,7 +1,5 @@
 # Overview
-ZeroShop meshing pipeline
-- 
-
+ZeroShop meshing pipeline, submodules can be used idependently or with docker-compose
 
 # Setup
 Clone the git, then init submodules
