@@ -1,0 +1,3 @@
+[submodule "segmentation/Grounded-SAM-2-zeroshop"]
+	path = segmentation/Grounded-SAM-2-zeroshop
+	url = https://github.com/St333fan/Grounded-SAM-2-zeroshop
