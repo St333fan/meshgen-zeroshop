@@ -1,0 +1,26 @@
+version: '2.4'
+services:
+  grounding-sam2:
+    image: grounding-sam2:latest
+    privileged: true
+    build:
+      context: ../segmentation/Grounded-SAM-2-zeroshop
+      dockerfile: Dockerfile
+      shm_size: '2gb'
+    shm_size: '2gb'
+    network_mode: "host"
+    runtime: "nvidia"
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ../segmentation/Grounded-SAM-2-zeroshop/:/code
+      - ../segmentation/Grounded-SAM-2-zeroshop/torch_cache:/root/.cache/torch
+      - ../datasets:/code/datasets
+    environment: 
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    command: bash -c "chmod -R 777 /code/datasets;
+                      exec bash"                  
+    stdin_open: true
+    tty: true 
