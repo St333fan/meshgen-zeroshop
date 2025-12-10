@@ -1,3 +1,6 @@
 [submodule "segmentation/Grounded-SAM-2-zeroshop"]
 	path = segmentation/Grounded-SAM-2-zeroshop
 	url = https://github.com/St333fan/Grounded-SAM-2-zeroshop
+[submodule "registration/mast3r-zeroshop"]
+	path = registration/mast3r-zeroshop
+	url = https://github.com/St333fan/mast3r-zeroshop
