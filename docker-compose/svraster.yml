@@ -17,11 +17,16 @@ services:
       - /dev/bus/usb:/dev/bus/usb
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ../nvs/svraster-zeroshop:/home/appuser/svraster
-      - ../datasets:/home/appuser/datasets
+      - ../datasets:/code/datasets
     environment: 
       - DISPLAY
       - QT_X11_NO_MITSHM=1
       - NVIDIA_DRIVER_CAPABILITIES=all
-    command: bash -c "source activate svraster && exec bash" 
+    command: bash -c "source activate svraster && \
+      chmod +x ./process_all_ycbv.sh && \
+      ./process_all_ycbv.sh && \
+      chmod -R 777 /code/datasets && \
+      exec bash
+      "
     stdin_open: true
     tty: true 

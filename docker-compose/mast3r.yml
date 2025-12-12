@@ -9,22 +9,33 @@ services:
       shm_size: '2gb'
       args:
         - USE_CUDA=1
-        - TORCH_ARCH=7.0;7.5;8.0;8.6+PTX
+        - TORCH_ARCH=7.0;7.5;8.0;8.6+/code/datasets/ycbv_real_subsetPTX
     shm_size: '2gb'
     network_mode: "host"
     runtime: "nvidia"
     volumes:
       - /dev/bus/usb:/dev/bus/usb
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      #- ../segmentation/Grounded-SAM-2-zeroshop/:/code
-      #- ../segmentation/Grounded-SAM-2-zeroshop/torch_cache:/root/.cache/torch
       - ../datasets:/code/datasets
     environment: 
       - DISPLAY
       - QT_X11_NO_MITSHM=1
       - NVIDIA_DRIVER_CAPABILITIES=all
-    command: bash -c "python process_real_object_dataset_docker.py --dataset_path /code/datasets/ycbv_real_subset --prompt 'object in the middle.';
-                      chmod -R 777 /code/datasets
-                      exec bash" 
+      - DISABLE_ITTNOTIFY=1
+    command: bash -c "
+      source /opt/conda/etc/profile.d/conda.sh &&
+      conda activate mast3r &&
+      chmod +x prepare_structure_all_ycbv.sh process_scene_obj_height_all_ycbv.sh make_pairs_all_ycbv.sh kapture_mast3r_mapping_all_ycbv.sh &&
+      echo '==== Running prepare_structure_all_ycbv.sh ====' &&
+      ./prepare_structure_all_ycbv.sh || true &&
+      echo '==== Running process_scene_obj_height_all_ycbv.sh ====' &&
+      ./process_scene_obj_height_all_ycbv.sh || true &&
+      echo '==== Running make_pairs_all_ycbv.sh ====' &&
+      ./make_pairs_all_ycbv.sh || true &&
+      echo '==== Running kapture_mast3r_mapping_all_ycbv_docker.sh ====' &&
+      ./kapture_mast3r_mapping_all_ycbv_docker.sh || true &&
+      chmod -R 777 /code/datasets &&
+      exec bash
+      "
     stdin_open: true
     tty: true 
