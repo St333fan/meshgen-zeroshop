@@ -2,8 +2,8 @@
 ZeroShop meshing pipeline, submodules can be used idependently or with docker-compose
 
 - Grounding-SAM-2 creates from a video 20 object images
-- MASt3R registeres these images two times: Surface, Segmentation
-- SVRaster: NVS-generted mesh with postprocessing
+- MASt3R registeres these images two times: with-surface->Surface, without-surface->Segmentation
+- SVRaster: NVS-generated mesh + Postprocessing
 
 # Setup
 Clone the git, then init submodules
