@@ -10,10 +10,10 @@ Clone the git, then init submodules
 ```bash
 git submodule update --init --recursive
 ```
-
+Build your dataset structure one video per obj_0000XX
 ```bash
-# Build dataset structure
-dataset
+# First usage best case try "ycbv_real_subset", so paths are correct 
+datasets
 └── ycbv_real_subset
     └── obj_000001
         ├── PXL_20251009_114058863.mp4
@@ -24,7 +24,7 @@ dataset
                 ├── PXL_20251009_114031268.jpg
                 └── PXL_20251009_114039378.jpg
 ```
-Before you run the pipeline build all docker images, as describted below
+Before you run the pipeline build all docker images, as described below
 ```bash
 # run the full pipeline, currently support for sam, mast3r and svraster
 chmod +x run_all_pipeline.sh
@@ -82,7 +82,7 @@ For now only conda install, look into submodule
 ## SVRASTER
 Check the settings 
 ```bash
-# what commands do you want to run? what docker cuda 124or117?
+# what commands do you want to run?
 docker-compose/svraster.yml
 
 # set segmented/surface vggt/mast3r-sfm
