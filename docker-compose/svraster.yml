@@ -23,10 +23,8 @@ services:
       - QT_X11_NO_MITSHM=1
       - NVIDIA_DRIVER_CAPABILITIES=all
     command: bash -c "source activate svraster && \
-      chmod +x ./process_all_ycbv.sh && \
-      ./process_all_ycbv.sh && \
-      chmod -R 777 /code/datasets && \
-      exec bash
-      "
+      chmod +x ./process_all_ycbv_docker.sh && \
+      ./process_all_ycbv_docker.sh && \
+      chmod -R 777 /code/datasets"
     stdin_open: true
     tty: true 

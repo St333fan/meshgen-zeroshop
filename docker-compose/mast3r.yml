@@ -34,8 +34,7 @@ services:
       ./make_pairs_all_ycbv.sh || true &&
       echo '==== Running kapture_mast3r_mapping_all_ycbv_docker.sh ====' &&
       ./kapture_mast3r_mapping_all_ycbv_docker.sh || true &&
-      chmod -R 777 /code/datasets &&
-      exec bash
+      chmod -R 777 /code/datasets
       "
     stdin_open: true
     tty: true 

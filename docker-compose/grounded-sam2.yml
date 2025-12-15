@@ -23,8 +23,7 @@ services:
       - DISPLAY
       - QT_X11_NO_MITSHM=1
       - NVIDIA_DRIVER_CAPABILITIES=all
-    command: bash -c "python process_real_object_dataset_docker.py --dataset_path /code/datasets/ycbv_real_subset --prompt 'object in the middle.';
-                      chmod -R 777 /code/datasets
-                      exec bash" 
+    command: bash -c "python process_real_object_dataset_docker.py --dataset_path /code/datasets/ycbv_real_subset --prompt 'object in the middle.' && \
+                      chmod -R 777 /code/datasets" 
     stdin_open: true
     tty: true 

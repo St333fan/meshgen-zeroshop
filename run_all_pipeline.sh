@@ -93,6 +93,10 @@ echo -e "${BLUE}STAGE 3: SVRASTER (NVS & MESH)${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 
+# Display access for meshlab texturation
+echo -e "${YELLOW}Granting X11 display access for pymeshlab...${NC}"
+xhost +local:docker
+
 echo -e "${YELLOW}Building and starting SVRaster container...${NC}"
 if docker-compose -f docker-compose/svraster.yml up; then
     echo -e "${GREEN}✓ Stage 3 completed successfully${NC}"
@@ -113,11 +117,6 @@ echo ""
 
 if [ "$OVERALL_SUCCESS" = true ]; then
     echo -e "${GREEN}✓ All stages completed successfully!${NC}"
-    echo ""
-    echo "Results are available in the datasets folder:"
-    echo "  - Segmented images: datasets/ycbv_real_subset/obj_*/scene/output/"
-    echo "  - SfM data: datasets/ycbv_real_subset/obj_*/train_pbr/mast3r-sfm/"
-    echo "  - Meshes: datasets/ycbv_real_subset/obj_*/train_pbr/mast3r-sfm/*/mesh/"
     exit 0
 else
     echo -e "${RED}⚠ Some stages failed. Check the logs above for details.${NC}"

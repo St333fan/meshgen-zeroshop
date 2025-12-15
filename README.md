@@ -1,8 +1,10 @@
 # Overview
+Tested on RTX 4070 16GB Driver Version: 550.78 CUDA Version: 12.4
+
 ZeroShop meshing pipeline, submodules can be used idependently or with docker-compose
 
-- Grounding-SAM-2 creates from a video 20 object images
-- MASt3R registeres these images two times: with-surface->Surface, without-surface->Segmentation
+- Grounding-SAM-2 creates 20 object images from a video
+- MASt3R registeres these images two times: with-surface-> surface, without-surface-> segmented
 - SVRaster: NVS-generated mesh + Postprocessing
 
 # Setup
@@ -23,6 +25,13 @@ datasets
                 ├── PXL_20251009_114023775.jpg
                 ├── PXL_20251009_114031268.jpg
                 └── PXL_20251009_114039378.jpg
+
+### add your own object height if you dont used mast3r estimation, if you dont add object_info.json every object is automatically scaled to 0.2 [m]
+scene/output/object_info.json
+{
+    "estimated_height": 0.465
+}
+###
 ```
 Before you run the pipeline build all docker images, as described below
 ```bash
@@ -90,8 +99,14 @@ nvs/svraster-zeroshop/process_all_ycbv.sh
 ```
 Start Docker
 ```bash
+# Display access for meshlab texturation
+xhost +local:docker
+
 # Start Docker Manual
 docker-compose -f docker-compose/svraster.yml up # --build # add if rebuild needed
 docker-compose -f docker-compose/svraster.yml down
+
+# SVRaster has many parameters I you want to change things or add new ones
+nvs/svraster-zeroshop/cfg
 ```
 
