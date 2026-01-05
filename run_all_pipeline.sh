@@ -26,7 +26,25 @@ echo ""
 echo "This script will run the complete processing pipeline:"
 echo "  1. Grounded-SAM-2: Segmentation"
 echo "  2. MASt3R: Structure from Motion and Registration"
-echo "  3. SVRaster: Novel View Synthesis and Mesh Extraction"
+echo "  3. Novel View Synthesis and Mesh Extraction"
+echo ""
+echo "Choose the method for Stage 3 (Novel View Synthesis):"
+echo "  1) SVRaster (default)"
+echo "  2) 2DGS (2D Gaussian Splatting)"
+echo ""
+read -p "Enter your choice (1 or 2) [1]: " NVS_CHOICE
+NVS_CHOICE=${NVS_CHOICE:-1}
+
+if [[ "$NVS_CHOICE" == "2" ]]; then
+    NVS_METHOD="2dgs"
+    NVS_DISPLAY_NAME="2DGS (2D GAUSSIAN SPLATTING)"
+    echo -e "${GREEN}Selected: 2D Gaussian Splatting${NC}"
+else
+    NVS_METHOD="svraster"
+    NVS_DISPLAY_NAME="SVRASTER"
+    echo -e "${GREEN}Selected: SVRaster${NC}"
+fi
+
 echo ""
 echo "Press Ctrl+C to cancel, or wait 5 seconds to continue..."
 sleep 5
@@ -86,27 +104,27 @@ fi
 echo -e "${YELLOW}Cleaning up MASt3R container...${NC}"
 docker-compose -f docker-compose/mast3r.yml down
 
-# Stage 3: SVRaster (Novel View Synthesis and Mesh Extraction)
+# Stage 3: Novel View Synthesis and Mesh Extraction
 echo ""
 echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}STAGE 3: SVRASTER (NVS & MESH)${NC}"
+echo -e "${BLUE}STAGE 3: $NVS_DISPLAY_NAME (NVS & MESH)${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 
-# Display access for meshlab texturation
+# Display access for meshlab texturation (needed for both methods)
 echo -e "${YELLOW}Granting X11 display access for pymeshlab...${NC}"
 xhost +local:docker
 
-echo -e "${YELLOW}Building and starting SVRaster container...${NC}"
-if docker-compose -f docker-compose/svraster.yml up; then
+echo -e "${YELLOW}Building and starting $NVS_DISPLAY_NAME container...${NC}"
+if docker-compose -f docker-compose/${NVS_METHOD}.yml up; then
     echo -e "${GREEN}✓ Stage 3 completed successfully${NC}"
 else
     echo -e "${RED}✗ Stage 3 failed${NC}"
     OVERALL_SUCCESS=false
 fi
 
-echo -e "${YELLOW}Cleaning up SVRaster container...${NC}"
-docker-compose -f docker-compose/svraster.yml down
+echo -e "${YELLOW}Cleaning up $NVS_DISPLAY_NAME container...${NC}"
+docker-compose -f docker-compose/${NVS_METHOD}.yml down
 
 # Final summary
 echo ""
