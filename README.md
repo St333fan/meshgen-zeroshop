@@ -86,7 +86,23 @@ docker-compose -f docker-compose/mast3r.yml down
 For now only conda install, look into submodule
 
 ## 2DGS
-For now only conda install, look into submodule
+Check the settings 
+```bash
+# what commands do you want to run?
+docker-compose/2dgs.yml
+
+# set segmented/surface or vggt/mast3r-sfm
+nvs/2d-gaussian-splatting-zeroshop/process_all_ycbv_docker.sh
+```
+Start Docker
+```bash
+# Display access for meshlab texturation
+xhost +local:docker
+
+# Start Docker Manual
+docker-compose -f docker-compose/2dgs.yml up # --build # add if rebuild needed
+docker-compose -f docker-compose/2dgs.yml down
+```
 
 ## SVRASTER
 Check the settings 
@@ -94,8 +110,8 @@ Check the settings
 # what commands do you want to run?
 docker-compose/svraster.yml
 
-# set segmented/surface vggt/mast3r-sfm
-nvs/svraster-zeroshop/process_all_ycbv.sh
+# set segmented/surface or vggt/mast3r-sfm
+nvs/svraster-zeroshop/process_all_ycbv_docker.sh
 ```
 Start Docker
 ```bash

@@ -1,0 +1,30 @@
+version: '2.4'
+services:
+  2dgs:
+    image: 2dgs:latest
+    privileged: true
+    build:
+      context: ../nvs/2d-gaussian-splatting-zeroshop
+      dockerfile: Dockerfile
+      shm_size: '2gb'
+      args:
+        - USE_CUDA=1
+        - TORCH_ARCH=7.0;7.5;8.0;8.6+PTX
+    shm_size: '2gb'
+    network_mode: "host"
+    runtime: "nvidia"
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ../nvs/2d-gaussian-splatting-zeroshop:/home/appuser/2dgs
+      - ../datasets:/code/datasets
+    environment: 
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    command: bash -c "source activate surfel_splatting && \
+      chmod +x ./process_all_ycbv_docker.sh && \
+      ./process_all_ycbv_docker.sh && \
+      chmod -R 777 /code/datasets"
+    stdin_open: true
+    tty: true 
