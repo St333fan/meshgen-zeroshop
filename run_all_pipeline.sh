@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Complete pipeline to process YCBV dataset through all stages
+# Complete pipeline to process object video to 3D mesh through all stages
 # This script runs all three Docker services sequentially:
 # 1. Grounded-SAM-2 (segmentation)
 # 2. MASt3R (registration/SfM)
-# 3. SVRaster (novel view synthesis and mesh extraction)
+# 3. SVRaster and 2DGS (novel view synthesis and mesh extraction)
 
 set -e  # Exit on error
 
