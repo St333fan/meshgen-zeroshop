@@ -1,11 +1,17 @@
 # Overview
-Tested on RTX 4070 16GB Driver Version: 550.78 CUDA Version: 12.4
+Tested on RTX 4070 16GB Driver Version: Ubuntu 20.04.6 NVIDIA 550.78 CUDA Version: 12.4
 
 ZeroShop meshing pipeline, submodules can be used idependently or with docker-compose
 
-- Grounding-SAM-2 creates 20 object images from a video
-- MASt3R registeres these images two times: with-surface-> surface, without-surface-> segmented
-- SVRaster: NVS-generated mesh + Postprocessing
+- Grounded-SAM-2 creates 20 object images from a video
+- MASt3R-SfM registeres these images two times: with-surface-> surface, without-surface-> segmented
+- VGGT is in test phase (worse than MASt3R-SfM)
+- 2DGS and SVRaster: NVS-generated mesh + Postprocessing
+- Trellis not included in the Repo, just for visualization
+- MASt3R Height uses 4 additional scanning-scenes image to estimate the height of an object
+
+![](./precise_zero_shop_pipeline.png)
+![](./ycbv_reconstructions.jpg)
 
 # Setup
 Clone the git, then init submodules
